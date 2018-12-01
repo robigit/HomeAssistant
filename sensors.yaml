@@ -1,0 +1,7 @@
+  - platform: yr
+    name: 'Tempo Atmosterico'
+    monitored_conditions:
+      - temperature
+      
+  
+    

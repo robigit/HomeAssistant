@@ -1,0 +1,60 @@
+  default_view:
+    view: yes
+    icon: mdi:home
+    entities:
+      - script.apri_cancello
+      - switch.apri_cancello
+      - switch.stato_nest
+      - camera.living_room
+      - binary_sensor.casa_away
+      - binary_sensor.living_room_camera_motion_detected
+      - sensor.tempo_atmosterico_temperature
+      - sun.sun
+ #     - device_tracker.iphone_di_roberto
+      - sensor.temperature_soggiorno
+      - sensor.humidity_soggiorno
+            
+
+
+  debug:
+    view: yes
+    icon: mdi:android-debug-bridge
+    entities:
+      - script.test_push
+      - script.set_nest_away
+      - script.set_nest_home
+      - media_player.soggiorno
+      - automation.apri_cancello_quando_arrivo
+      - script.test_telegram
+      - switch.sonoffcancello
+      - script.cancello_tasmota
+      - binary_sensor.SensoreRF
+
+  Inserisci_Allarme:
+    control: hidden
+    entities:
+      - alarm_control_panel.home_alarm
+      - input_boolean.mute_gateway_sounds
+      - script.play_sel_sound
+      - script.xiaomi_alarm_siren_cancel
+      - binary_sensor.switch_1
+      - sensor.illumination_1
+      - switch.stato_nest
+    
+
+  Sensori_Allarme:
+    - binary_sensor.door_window_sensor_1
+    - binary_sensor.door_window_sensor_2
+    - binary_sensor.finestra_soggiorno   
+    - binary_sensor.bagno_sopra
+    - binary_sensor.camera_matrimoniale
+    - binary_sensor.camera_damiano
+    - binary_sensor.camera_valerio
+    
+  allarme:
+    name: Sicurezza Casa
+    view: yes
+    icon: mdi:alarm-light
+    entities:
+      - group.inserisci_allarme
+      - group.Sensori_Allarme

@@ -1,0 +1,10 @@
+  - name: HOMEASSISTANT
+    platform: pushbullet
+    api_key: o.WXyyeIBfhsn7CsK7l44tIq8kPf2y9fzb
+  - platform: ios
+    name: ios_roberto
+    target: a6fbdd31-de9b-3f9e-9ca9-246af262d252
+    
+  - name: TELEGRAMROB
+    platform: telegram
+    chat_id: 415292221  

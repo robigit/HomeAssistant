@@ -1,0 +1,10 @@
+  - platform: mqtt
+    state_topic: "tele/RF_Bridge/RESULT"
+    name: 'SensoreRF'
+    value_template: '{{value_json.RfReceived.Data}}'
+    payload_on: '89B1B9'
+    payload_off: '89B1B9off'
+    device_class: Door
+    optimistic: false
+    qos: 1
+    retain: false

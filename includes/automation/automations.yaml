@@ -1,0 +1,39 @@
+#  - alias: Check sensor value and show notification
+#    trigger:
+#      platform: numeric_state
+#      entity_id: sensor.random_sensor
+#      above: 10
+#    action:
+#      service: notify.HOMEASSISTANT
+#      data:
+#        message: "Sensor value greater than 10"
+#        title: "Custom subject"
+
+  - alias: Apri Cancello Pulsante
+    trigger: 
+      platform: state
+      entity_id: binary_sensor.switch_1
+      to: 'on'
+      
+    action:
+      - service: script.apri_cancello
+      - service: notify.ios_iphone_di_roberto
+        data:
+          title: 'Home Assistant'
+          message: 'Aperto cancello'
+    
+  - alias: Reset SensoreRF state
+    hide_entity: true
+    initial_state: 'on'
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.SensoreRF
+      from: 'off'
+      to: 'on'
+      for:
+        seconds: 5
+    action:
+    - service: mqtt.publish
+      data:
+        topic: tele/RF_Bridge/RESULT
+        payload: 89B1B9off
