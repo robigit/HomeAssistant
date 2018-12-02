@@ -50,6 +50,10 @@
     - binary_sensor.camera_matrimoniale
     - binary_sensor.camera_damiano
     - binary_sensor.camera_valerio
+    - binary_sensor.SensoreRF
+    - binary_sensor.SensoreRF2
+    - binary_sensor.SensoreRFKerui
+
     
   allarme:
     name: Sicurezza Casa

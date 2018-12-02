@@ -8,3 +8,25 @@
     optimistic: false
     qos: 1
     retain: false
+
+  - platform: mqtt
+    state_topic: "tele/RF_Bridge/RESULT"
+    name: 'SensoreRF2'
+    value_template: '{{value_json.RfReceived.Data}}'
+    payload_on: '8C4999'
+    payload_off: '8C4999off'
+    device_class: Door
+    optimistic: false
+    qos: 1
+    retain: false
+
+  - platform: mqtt
+    state_topic: "tele/RF_Bridge/RESULT"
+    name: 'SensoreRFKerui'
+    value_template: '{{value_json.RfReceived.Data}}'
+    payload_on: '5F7DEE'
+    payload_off: '5F7DE7'
+    device_class: Door
+    optimistic: false
+    qos: 1
+    retain: false

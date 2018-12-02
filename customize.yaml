@@ -12,17 +12,14 @@ binary_sensor.living_room_camera_sound_detected:
   hidden: true
 binary_sensor.door_window_sensor_1:
   friendly_name: Sensore Finestra Cucina
-  device_class: Door
 binary_sensor.door_window_sensor_2:
   friendly_name: Sensore Porta Principale
-  device_class: Door
 binary_sensor.switch_1:
   friendly_name: Pulsante
 sensor.illumination_1:
   friendly_name: Sensore Illuminazione
 binary_sensor.finestra_soggiorno:
   friendly_name: Finestra Soggiorno
-  device_class: Door
 binary_sensor.bagno_sopra:
   friendly_name: Bagno Sopra
 binary_sensor.camera_matrimoniale:
