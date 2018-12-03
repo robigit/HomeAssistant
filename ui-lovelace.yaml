@@ -14,6 +14,17 @@ views:
     icon: mdi:home
     id: main
     cards:
+      - type: glance
+#        title: Sensori
+        entities:
+          - sun.sun
+          - entity: sensor.tempo_atmosterico_temperature
+            name: T Esterna       
+          - entity: sensor.temperature_soggiorno
+            name: T Interna
+          - entity: sensor.humidity_soggiorno
+            name: Umidita
+
       - type: entity-button
         name: 'Apri Cancello'
         tap_action: call-service
@@ -25,36 +36,12 @@ views:
         entity: alarm_control_panel.home_alarm
         title: Allarme
         show_keypad: false
-
-  - title: Altri
-    cards:
-      - type: entities
-        entities:
-          - script.apri_cancello
-          - switch.apri_cancello
-          - switch.stato_nest
-          - binary_sensor.casa_away
-          - binary_sensor.living_room_camera_motion_detected
-          - sensor.tempo_atmosterico_temperature
-          - sun.sun
-          - sensor.illumination_1
       - type: picture-entity
         title: Living Room
         entity: camera.living_room
         camera_image: camera.living_room
         show_info: true
         tap_action: dialog
-
-  - title: debug
-    icon: mdi:android-debug-bridge
-    cards:
-      - type: entities
-        entities:
-          - script.test_push
-          - script.set_nest_away
-          - script.set_nest_home
-      - type: media-control
-        entity: media_player.soggiorno
 
 
   - title: Sicurezza Casa
@@ -73,3 +60,33 @@ views:
           - binary_sensor.sensorerf
           - binary_sensor.sensorerf2
           - binary_sensor.sensorerfkerui
+          - binary_sensor.casa_away
+
+  - title: Altri
+    icon: mdi:flask
+    cards:
+      - type: entities
+        entities:
+          - script.apri_cancello
+          - switch.apri_cancello
+          - switch.stato_nest
+          - binary_sensor.casa_away
+          - binary_sensor.living_room_camera_motion_detected
+          - sensor.tempo_atmosterico_temperature
+          - sun.sun
+          - sensor.illumination_1
+      
+
+  - title: debug
+    icon: mdi:android-debug-bridge
+    cards:
+      - type: entities
+        entities:
+          - script.test_push
+          - script.set_nest_away
+          - script.set_nest_home
+      - type: media-control
+        entity: media_player.soggiorno
+
+
+  

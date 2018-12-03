@@ -14,7 +14,7 @@
         turn_off:
           service: script.set_nest_home
         friendly_name: Telecamera
-        #icon: 
+  
   
   - platform: mqtt
     name: sonoffcancello

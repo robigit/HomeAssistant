@@ -130,9 +130,21 @@
     entity_id: alarm_control_panel.home_alarm
     to: 'triggered'
   action:
+    - service: camera.snapshot
+      data:
+        entity_id: camera.living_room
+        filename: "/config/www/captures/nest.jpg"    
+    - delay: 
+        seconds: 5
     - service: notify.TELEGRAMROB
       data:
         message: "ALLARME Intrusione!"
+        data:
+          photo:
+            - file: "/config/www/captures/nest.jpg"
+              caption: ALLARME 
+
+
          
 ### Sending a notification when the alarm is Arm###
 - alias: 'Send notification when alarm is Arm Away'

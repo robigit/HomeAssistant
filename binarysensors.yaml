@@ -1,6 +1,6 @@
   - platform: mqtt
     state_topic: "tele/RF_Bridge/RESULT"
-    name: 'SensoreRF'
+    name: 'sensorerf'
     value_template: '{{value_json.RfReceived.Data}}'
     payload_on: '89B1B9'
     payload_off: '89B1B9off'
@@ -11,7 +11,7 @@
 
   - platform: mqtt
     state_topic: "tele/RF_Bridge/RESULT"
-    name: 'SensoreRF2'
+    name: 'sensorerf2'
     value_template: '{{value_json.RfReceived.Data}}'
     payload_on: '8C4999'
     payload_off: '8C4999off'
@@ -22,7 +22,7 @@
 
   - platform: mqtt
     state_topic: "tele/RF_Bridge/RESULT"
-    name: 'SensoreRFKerui'
+    name: 'sensorerfkerui'
     value_template: '{{value_json.RfReceived.Data}}'
     payload_on: '5F7DEE'
     payload_off: '5F7DE7'

@@ -17,10 +17,7 @@
       
     action:
       - service: script.apri_cancello
-      - service: notify.ios_iphone_di_roberto
-        data:
-          title: 'Home Assistant'
-          message: 'Aperto cancello'
+
     
   - alias: Reset SensoreRF state
     hide_entity: true
