@@ -29,7 +29,8 @@ views:
         name: 'Apri Cancello'
         tap_action: call-service
         service: script.turn_on
-        entity: script.apri_cancello
+        #entity: script.apri_cancello
+        entity: script.cancello_tasmota
         icon: mdi:gate
       #- type: alarm-panel
       - type: custom:alarm_control_panel-card
@@ -47,10 +48,11 @@ views:
   - title: Sicurezza Casa
     icon: mdi:alarm-light
     cards:
-      - type: glance
+      - type: entities
         title: Inserisci_Allarme
         entities:
-          - binary_sensor.door_window_sensor_1
+          - entity: binary_sensor.door_window_sensor_1
+            secondary_info: last-changed
           - binary_sensor.door_window_sensor_2
           - binary_sensor.finestra_soggiorno   
           - binary_sensor.bagno_sopra
@@ -60,7 +62,9 @@ views:
           - binary_sensor.sensorerf
           - binary_sensor.sensorerf2
           - binary_sensor.sensorerfkerui
+          - type: divider
           - binary_sensor.casa_away
+          - binary_sensor.sensoremovimento1
 
   - title: Altri
     icon: mdi:flask

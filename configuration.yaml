@@ -15,9 +15,9 @@ homeassistant:
 
 panel_iframe:
   configurator:
-    title: Configurator
+    title: Sonoff Bridge
     icon: mdi:wrench
-    url: https://192.168.1.88:3218  
+    url: http://192.168.1.93  
   
 # Show links to resources in log and frontend
 #introduction:
@@ -68,7 +68,11 @@ ios:
 shell_command:
   apri_cancello: curl -X GET http://192.168.1.79/APRI
 
+homekit:
 
+device_tracker:
+  - platform: nmap_tracker
+    hosts: 192.168.1.0/24
 
 # Text to speech
 tts:

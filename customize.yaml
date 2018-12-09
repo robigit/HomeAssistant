@@ -11,21 +11,34 @@ binary_sensor.living_room_camera_person_detected:
 binary_sensor.living_room_camera_sound_detected:
   hidden: true
 binary_sensor.door_window_sensor_1:
+  device_class: window
   friendly_name: Sensore Finestra Cucina
 binary_sensor.door_window_sensor_2:
+  device_class: door
   friendly_name: Sensore Porta Principale
 binary_sensor.switch_1:
   friendly_name: Pulsante
 sensor.illumination_1:
   friendly_name: Sensore Illuminazione
 binary_sensor.finestra_soggiorno:
+  device_class: window
   friendly_name: Finestra Soggiorno
 binary_sensor.bagno_sopra:
+  device_class: window
   friendly_name: Bagno Sopra
 binary_sensor.camera_matrimoniale:
+  device_class: window
   friendly_name: Camera Matrimoniale
 binary_sensor.camera_damiano:
+  device_class: window
   friendly_name: Camera Damiano
 binary_sensor.camera_valerio:
+  device_class: window
   friendly_name: Camera Valerio
-
+binary_sensor.sensorerfkerui:
+  device_class: window
+  friendly_name: Bagno sotto
+binary_sensor.sensorerf:
+  friendly_name: Garage 1
+binary_sensor.sensorerf2:
+  friendly_name: Garage 2

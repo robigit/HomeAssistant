@@ -30,3 +30,15 @@
     optimistic: false
     qos: 1
     retain: false
+
+
+  - platform: mqtt
+    state_topic: "tele/RF_Bridge/RESULT"
+    name: 'sensoremovimento1'
+    value_template: '{{value_json.RfReceived.Data}}'
+    payload_on: '134046'
+    payload_off: '134046off'
+    device_class: motion
+    optimistic: false
+    qos: 1
+    retain: false
