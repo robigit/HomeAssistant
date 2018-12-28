@@ -13,11 +13,11 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
 
-panel_iframe:
-  configurator:
-    title: Sonoff Bridge
-    icon: mdi:wrench
-    url: http://192.168.1.93  
+#panel_iframe:
+#  configurator:
+#    title: Sonoff Bridge
+#    icon: mdi:wrench
+#    url: http://192.168.1.93  
   
 # Show links to resources in log and frontend
 #introduction:
@@ -68,11 +68,13 @@ ios:
 shell_command:
   apri_cancello: curl -X GET http://192.168.1.79/APRI
 
-homekit:
+#homekit:
 
-device_tracker:
-  - platform: nmap_tracker
-    hosts: 192.168.1.0/24
+#device_tracker:
+#  - platform: thomson
+#    host: 192.168.1.254
+#    username: !secret router_user
+#    password: !secret router_pwd
 
 # Text to speech
 tts:
@@ -108,19 +110,20 @@ alarm_control_panel:
       pending_time: 30
       delay_time: 20
     
-input_boolean:
-  mute_gateway_sounds:
-    name: Mute
-    icon: mdi:volume-off
+
     
 telegram_bot:
   - platform: broadcast
     api_key: !secret telegram_api_key
     allowed_chat_ids:
       - !secret telegram_rob_id
+      - !secret telegram_canale
+
 mqtt:
   password: !secret mqtt_password
   #utente: homeassistant
+lovelace:
+  mode: yaml
      
 notify: !include notifies.yaml
 sensor: !include sensors.yaml
@@ -129,4 +132,5 @@ automation: !include_dir_merge_list includes/automation/
 script: !include scripts.yaml
 switch: !include switches.yaml
 binary_sensor: !include binarysensors.yaml
+input_boolean: !include inputboolean.yaml
 

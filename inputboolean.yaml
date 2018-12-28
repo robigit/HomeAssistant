@@ -1,0 +1,5 @@
+  abilita_allarme_notte:
+    name: abilita_allarme_notte
+    initial: on
+    icon: mdi:account-alert
+

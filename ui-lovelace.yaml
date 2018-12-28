@@ -27,11 +27,15 @@ views:
 
       - type: entity-button
         name: 'Apri Cancello'
-        tap_action: call-service
-        service: script.turn_on
-        #entity: script.apri_cancello
+        tap_action:
+          action: call-service
+          service: script.turn_on
+          service_data: 
+            entity_id: script.cancello_tasmota
         entity: script.cancello_tasmota
         icon: mdi:gate
+
+
       #- type: alarm-panel
       - type: custom:alarm_control_panel-card
         entity: alarm_control_panel.home_alarm
@@ -43,6 +47,15 @@ views:
         camera_image: camera.living_room
         show_info: true
         tap_action: dialog
+      - type: picture-entity
+        entity: input_boolean.abilita_allarme_notte
+        name: Allarme notte
+        show_state: off
+        state_image:
+          "on": /local/images/thumbsup.png
+          "off": /local/images/thumbsdn.png
+        tap_action: 
+          action : toggle
 
 
   - title: Sicurezza Casa
@@ -50,45 +63,76 @@ views:
     cards:
       - type: entities
         title: Inserisci_Allarme
+        show_header_toggle: false
         entities:
           - entity: binary_sensor.door_window_sensor_1
             secondary_info: last-changed
-          - binary_sensor.door_window_sensor_2
-          - binary_sensor.finestra_soggiorno   
-          - binary_sensor.bagno_sopra
-          - binary_sensor.camera_matrimoniale
-          - binary_sensor.camera_damiano
-          - binary_sensor.camera_valerio
-          - binary_sensor.sensorerf
-          - binary_sensor.sensorerf2
-          - binary_sensor.sensorerfkerui
+          - entity: binary_sensor.door_window_sensor_2
+            secondary_info: last-changed
+          - entity: binary_sensor.finestra_soggiorno   
+            secondary_info: last-changed
+          - entity: binary_sensor.bagno_sopra
+            secondary_info: last-changed
+          - entity: binary_sensor.camera_matrimoniale
+            secondary_info: last-changed
+          - entity: binary_sensor.camera_damiano
+            secondary_info: last-changed
+          - entity: binary_sensor.camera_valerio
+            secondary_info: last-changed
+          - entity: binary_sensor.sensorerf
+            secondary_info: last-changed
+          - entity: binary_sensor.sensorerf2
+            secondary_info: last-changed
+          - entity: binary_sensor.sensorerfkerui
+            secondary_info: last-changed
+          - entity: binary_sensor.sensoremovimento1
+            secondary_info: last-changed
           - type: divider
-          - binary_sensor.casa_away
-          - binary_sensor.sensoremovimento1
+          - entity: binary_sensor.casa_away
 
-  - title: Altri
-    icon: mdi:flask
-    cards:
-      - type: entities
-        entities:
-          - script.apri_cancello
-          - switch.apri_cancello
-          - switch.stato_nest
-          - binary_sensor.casa_away
-          - binary_sensor.living_room_camera_motion_detected
-          - sensor.tempo_atmosterico_temperature
-          - sun.sun
-          - sensor.illumination_1
+
+#  - title: Altri
+#    icon: mdi:flask
+#    cards:
+#      - type: glance
+#        entities:
+#          - entity: device_tracker.d0c5f34df295
+#            name: Roberto
+#          - entity: device_tracker.6030d4028c55
+#            name: Maria Pia
+#          - entity: device_tracker.5435306494cb
+#            name: Valerio
       
 
   - title: debug
     icon: mdi:android-debug-bridge
+    id: debug2
     cards:
       - type: entities
         entities:
-          - script.test_push
-          - script.set_nest_away
-          - script.set_nest_home
+          - script.cancello_tasmota
+      
+      - type: horizontal-stack
+        cards:
+        - type: entity-button
+          entity: input_boolean.abilita_allarme_notte
+          tap_action: 
+            action : toggle
+        
+
+        - type: picture-entity
+          entity: input_boolean.abilita_allarme_notte
+          name: Allarme notte
+          show_state: off
+          state_image:
+            "on": /local/images/thumbsup.png
+            "off": /local/images/thumbsdn.png
+          tap_action: 
+            action : toggle
+          #aspect_ratio: 50x50
+
+      
+
       - type: media-control
         entity: media_player.soggiorno
 

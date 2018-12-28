@@ -8,3 +8,7 @@
   - name: TELEGRAMROB
     platform: telegram
     chat_id: 415292221  
+
+  - name: telegramgruppo
+    platform: telegram
+    chat_id: -1001284396311

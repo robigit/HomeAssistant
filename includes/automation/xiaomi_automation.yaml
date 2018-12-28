@@ -136,7 +136,7 @@
         filename: "/config/www/captures/nest.jpg"    
     - delay: 
         seconds: 5
-    - service: notify.TELEGRAMROB
+    - service: notify.telegramgruppo
       data:
         message: "ALLARME Intrusione!"
         data:
@@ -174,3 +174,45 @@
     - service: notify.TELEGRAMROB
       data:
         message: "DISATTIVATO Allarme!"
+
+### Spengo l'allarme col pulsante
+- alias: Spegni Allarme Pulsante
+  trigger: 
+    platform: state
+    entity_id: binary_sensor.switch_1
+    to: 'on'
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_home
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_away
+  action:
+    - service: alarm_control_panel.alarm_disarm
+      data:
+        entity_id: alarm_control_panel.home_alarm
+
+- alias: Attiva Allarme Notte
+  trigger:
+    platform: time
+    at: '01:00:00'
+  condition:
+    condition: state
+    entity_id: input_boolean.abilita_allarme_notte
+    state: 'on'
+  action: 
+    - service: alarm_control_panel.alarm_arm_home
+      data: 
+        entity_id: alarm_control_panel.home_alarm
+
+- alias: Disattiva Allarme Notte
+  trigger:
+    platform: time
+    at: '05:30:00'
+  action: 
+    - service: alarm_control_panel.alarm_disarm
+      data: 
+        entity_id: alarm_control_panel.home_alarm

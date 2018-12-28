@@ -9,14 +9,6 @@
 #        message: "Sensor value greater than 10"
 #        title: "Custom subject"
 
-  - alias: Apri Cancello Pulsante
-    trigger: 
-      platform: state
-      entity_id: binary_sensor.switch_1
-      to: 'on'
-      
-    action:
-      - service: script.apri_cancello
 
     
   - alias: Reset SensoreRF state
