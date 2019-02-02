@@ -42,3 +42,5 @@ binary_sensor.sensorerf:
   friendly_name: Garage 1
 binary_sensor.sensorerf2:
   friendly_name: Garage 2
+binary_sensor.motion_sensor_aqara1:
+  friendly_name: Movimento Garage

@@ -89,6 +89,8 @@ views:
             secondary_info: last-changed
           - type: divider
           - entity: binary_sensor.casa_away
+          - entity:  binary_sensor.motion_sensor_aqara1
+            secondary_info: last-changed
 
 
 #  - title: Altri

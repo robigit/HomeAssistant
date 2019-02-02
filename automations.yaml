@@ -1,0 +1,280 @@
+#  - alias: Check sensor value and show notification
+#    trigger:
+#      platform: numeric_state
+#      entity_id: sensor.random_sensor
+#      above: 10
+#    action:
+#      service: notify.HOMEASSISTANT
+#      data:
+#        message: "Sensor value greater than 10"
+#        title: "Custom subject"
+
+
+    
+  - alias: Reset SensoreRF state
+    hide_entity: true
+    initial_state: 'on'
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.SensoreRF
+      from: 'off'
+      to: 'on'
+      for:
+        seconds: 5
+    action:
+    - service: mqtt.publish
+      data:
+        topic: tele/RF_Bridge/RESULT
+        payload: 89B1B9off
+
+  - alias: Reset SensoreRF2 state
+    hide_entity: true
+    initial_state: 'on'
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.SensoreRF2
+      from: 'off'
+      to: 'on'
+      for:
+        seconds: 5
+    action:
+    - service: mqtt.publish
+      data:
+        topic: tele/RF_Bridge/RESULT
+        payload: 8C4999off
+
+
+  - alias: Reset sensoremovimento1 state
+    hide_entity: true
+    initial_state: 'on'
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.sensoremovimento1
+      from: 'off'
+      to: 'on'
+      for:
+        seconds: 5
+    action:
+    - service: mqtt.publish
+      data:
+        topic: tele/RF_Bridge/RESULT
+        payload: 134046off
+
+  ## Play specific sound while alarm is arming ###
+  - alias: "Allarme in attvazione"
+    trigger:
+      platform: state
+      entity_id: alarm_control_panel.home_alarm
+      from: 'disarmed'
+      to: 'pending'
+    action:
+  ### Turn off gateway mute to play sound ###
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.mute_gateway_sounds
+  ### Play ringtone sound in loop until arm is done ###
+      - service: xiaomi_aqara.play_ringtone
+        data:
+          gw_mac: !secret xiaomi_mac
+          ringtone_id: 11
+          ringtone_vol: 100
+  
+  # - alias: "Auto Arm Alarm if Away"      
+    # trigger:
+      # platform: state
+      # entity_id: group.all_devices
+      # from: 'home'
+      # to: 'not_home'
+      # for:
+        # minutes: 1
+    # condition:
+      # - condition: state
+        # entity_id: alarm_control_panel.home_alarm
+        # state: disarmed
+    # action:
+      # - service: alarm_control_panel.alarm_arm_away
+        # data:
+          # entity_id: alarm_control_panel.home_alarm     
+          
+  # - alias: "Auto Disarm Alarm if Home"      
+    # trigger:
+      # platform: state
+      # entity_id: group.all_devices
+      # from: 'not_home'
+      # to: 'home'
+      # for:
+        # seconds: 10
+    # condition:
+      # - condition: state
+        # entity_id: alarm_control_panel.home_alarm
+        # state: armed_away
+    # action:
+      # - service: alarm_control_panel.alarm_disarm
+        # data:
+          # entity_id: alarm_control_panel.home_alarm
+          
+  - alias: 'Allarme Away'
+    trigger:
+      - platform: state
+        entity_id: group.Sensori_Allarme
+        to: 'on'
+    
+    condition:
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_away
+            
+    action:
+      - service: alarm_control_panel.alarm_trigger
+        entity_id: alarm_control_panel.home_alarm 
+      
+
+  #non mette i sensori di movimento     
+  - alias: 'Allarme Home'
+    trigger:
+      - platform: state
+        entity_id: group.Sensori_Allarme
+        to: 'on'
+      
+    condition:
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_home
+            
+    action:
+      - service: alarm_control_panel.alarm_trigger
+        entity_id: alarm_control_panel.home_alarm  
+        
+        
+      
+      
+  ### Play Sound Mi Gateway when the alarm is triggered###
+  - alias: 'Suona sirena allarme'
+    trigger:
+      platform: state
+      entity_id: alarm_control_panel.home_alarm
+      to: 'triggered'
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.mute_gateway_sounds
+      # - service: homeassistant.turn_on
+        # data:
+          # entity_id: switch.plug_158d00015f0a93
+      - service: script.play_sel_sound
+      
+  
+  ### Turn off Xiaomi gateway ###    
+  - alias: "Spegni Allarme"
+    trigger:
+      platform: state
+      entity_id: alarm_control_panel.home_alarm
+      to: 'disarmed'
+    action:
+      - service: script.xiaomi_alarm_siren_cancel
+      - service: xiaomi_aqara.stop_ringtone
+        data:
+          gw_mac: !secret xiaomi_mac
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.mute_gateway_sounds
+      - service: switch.turn_off
+        entity_id: switch.stato_nest
+      # - service: homeassistant.turn_off
+        # data:
+          # entity_id: switch.plug_158d00015f0a93
+          
+          
+  ### Sending a notification when the alarm is triggered###
+  - alias: 'Send notification when alarm triggered'
+    trigger:
+      platform: state
+      entity_id: alarm_control_panel.home_alarm
+      to: 'triggered'
+    action:
+      - service: camera.snapshot
+        data:
+          entity_id: camera.living_room
+          filename: "/config/www/captures/nest.jpg"    
+      - delay: 
+          seconds: 5
+      - service: notify.telegramgruppo
+        data:
+          message: "ALLARME Intrusione!"
+          data:
+            photo:
+              - file: "/config/www/captures/nest.jpg"
+                caption: ALLARME 
+
+
+          
+  ### Sending a notification when the alarm is Arm###
+  - alias: 'Send notification when alarm is Arm Away'
+    trigger:
+      - platform: state
+        entity_id: alarm_control_panel.home_alarm
+        to: 'armed_away'
+      - platform: state
+        entity_id: alarm_control_panel.home_alarm
+        to: 'armed_home' 
+
+    action:
+      - service: notify.telegramrob
+        data:
+          message: "ATTIVATO Allarme!"
+      - service: switch.turn_on
+        entity_id: switch.stato_nest  
+      
+          
+  ### Sending a notification when the alarm is Arm###
+  - alias: 'Send notification when alarm is disarmed'
+    trigger:
+      platform: state
+      entity_id: alarm_control_panel.home_alarm
+      to: 'disarmed'
+    action:
+      - service: notify.telegramrob
+        data:
+          message: "DISATTIVATO Allarme!"
+
+  ### Spengo l'allarme col pulsante
+  - alias: Spegni Allarme Pulsante
+    trigger: 
+      platform: state
+      entity_id: binary_sensor.switch_1
+      to: 'on'
+    condition:
+      condition: or
+      conditions:
+        - condition: state
+          entity_id: alarm_control_panel.home_alarm
+          state: armed_home
+        - condition: state
+          entity_id: alarm_control_panel.home_alarm
+          state: armed_away
+    action:
+      - service: alarm_control_panel.alarm_disarm
+        data:
+          entity_id: alarm_control_panel.home_alarm
+
+  - alias: Attiva Allarme Notte
+    trigger:
+      platform: time
+      at: '01:00:00'
+    condition:
+      condition: state
+      entity_id: input_boolean.abilita_allarme_notte
+      state: 'on'
+    action: 
+      - service: alarm_control_panel.alarm_arm_home
+        data: 
+          entity_id: alarm_control_panel.home_alarm
+
+  - alias: Disattiva Allarme Notte
+    trigger:
+      platform: time
+      at: '05:30:00'
+    action: 
+      - service: alarm_control_panel.alarm_disarm
+        data: 
+          entity_id: alarm_control_panel.home_alarm
